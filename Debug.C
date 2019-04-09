@@ -52,12 +52,12 @@ void	CfgFsys( )
 
 /*******************************************************************************
 * Function Name  : mDelayus(UNIT16 n)
-* Description    : usÑÓÊ±º¯Êý
+* Description    : 
 * Input          : UNIT16 n
 * Output         : None
 * Return         : None
 *******************************************************************************/ 
-void	mDelayuS( UINT16 n )  // ÒÔuSÎªµ¥Î»ÑÓÊ±
+void	mDelayuS( UINT16 n )  
 {
 #ifdef	FREQ_SYS
 #if		FREQ_SYS <= 6000000
@@ -98,12 +98,12 @@ void	mDelayuS( UINT16 n )  // ÒÔuSÎªµ¥Î»ÑÓÊ±
 
 /*******************************************************************************
 * Function Name  : mDelayms(UNIT16 n)
-* Description    : msÑÓÊ±º¯Êý
+* Description    : 
 * Input          : UNIT16 n
 * Output         : None
 * Return         : None
 *******************************************************************************/
-void	mDelaymS( UINT16 n )                                                  // ÒÔmSÎªµ¥Î»ÑÓÊ±
+void	mDelaymS( UINT16 n )  
 {
 	while ( n ) {
 #ifdef	DELAY_MS_HW
@@ -118,20 +118,19 @@ void	mDelaymS( UINT16 n )                                                  // Ò
 
 /*******************************************************************************
 * Function Name  : CH554UART0Alter()
-* Description    : CH554´®¿Ú0Òý½ÅÓ³Éä,´®¿ÚÓ³Éäµ½P1.2ºÍP1.3
+* Description    : 
 * Input          : None
 * Output         : None
 * Return         : None
 *******************************************************************************/
 void CH554UART0Alter()
 {
-    PIN_FUNC |= bUART0_PIN_X;                                                  //´®¿ÚÓ³Éäµ½P1.2ºÍP1.3
+    PIN_FUNC |= bUART0_PIN_X;
 }
 
 /*******************************************************************************
 * Function Name  : mInitSTDIO()
-* Description    : CH554´®¿Ú0³õÊ¼»¯,Ä¬ÈÏÊ¹ÓÃT1×÷UART0µÄ²¨ÌØÂÊ·¢ÉúÆ÷,Ò²¿ÉÒÔÊ¹ÓÃT2
-                   ×÷Îª²¨ÌØÂÊ·¢ÉúÆ÷
+* Description    : 
 * Input          : None
 * Output         : None
 * Return         : None
@@ -143,98 +142,98 @@ void	mInitSTDIO( )
 
     SM0 = 0;
     SM1 = 1;
-    SM2 = 0;                                                                   //´®¿Ú0Ê¹ÓÃÄ£Ê½1
-                                                                               //Ê¹ÓÃTimer1×÷Îª²¨ÌØÂÊ·¢ÉúÆ÷
-    RCLK = 0;                                                                  //UART0½ÓÊÕÊ±ÖÓ
-    TCLK = 0;                                                                  //UART0·¢ËÍÊ±ÖÓ
+    SM2 = 0;                                                                   
+                                                                               
+    RCLK = 0;                                                                  
+    TCLK = 0;                                                                  
     PCON |= SMOD;
-    x = 10 * FREQ_SYS / UART0_BUAD / 16;                                       //Èç¹û¸ü¸ÄÖ÷Æµ£¬×¢ÒâxµÄÖµ²»ÒªÒç³ö                            
+    x = 10 * FREQ_SYS / UART0_BUAD / 16;                                                                   
     x2 = x % 10;
     x /= 10;
-    if ( x2 >= 5 ) x ++;                                                       //ËÄÉáÎåÈë
+    if ( x2 >= 5 ) x ++;                                                       
 
-    TMOD = TMOD & ~ bT1_GATE & ~ bT1_CT & ~ MASK_T1_MOD | bT1_M1;              //0X20£¬Timer1×÷Îª8Î»×Ô¶¯ÖØÔØ¶¨Ê±Æ÷
-    T2MOD = T2MOD | bTMR_CLK | bT1_CLK;                                        //Timer1Ê±ÖÓÑ¡Ôñ
-    TH1 = 0-x;                                                                 //12MHz¾§Õñ,buad/12ÎªÊµ¼ÊÐèÉèÖÃ²¨ÌØÂÊ
-    TR1 = 1;                                                                   //Æô¶¯¶¨Ê±Æ÷1
+    TMOD = TMOD & ~ bT1_GATE & ~ bT1_CT & ~ MASK_T1_MOD | bT1_M1;              
+    T2MOD = T2MOD | bTMR_CLK | bT1_CLK;                                        
+    TH1 = 0-x;                                                                 
+    TR1 = 1;                                                                   
     TI = 1;
-    REN = 1;                                                                   //´®¿Ú0½ÓÊÕÊ¹ÄÜ
+    REN = 1;                                                                   
 }
 
 /*******************************************************************************
 * Function Name  : CH554UART0RcvByte()
-* Description    : CH554UART0½ÓÊÕÒ»¸ö×Ö½Ú
+* Description    : 
 * Input          : None
 * Output         : None
 * Return         : SBUF
 *******************************************************************************/
 UINT8  CH554UART0RcvByte( )
 {
-    while(RI == 0);                                                            //²éÑ¯½ÓÊÕ£¬ÖÐ¶Ï·½Ê½¿É²»ÓÃ
+    while(RI == 0);                                                            
     RI = 0;
     return SBUF;
 }
 
 /*******************************************************************************
 * Function Name  : CH554UART0SendByte(UINT8 SendDat)
-* Description    : CH554UART0·¢ËÍÒ»¸ö×Ö½Ú
-* Input          : UINT8 SendDat£»Òª·¢ËÍµÄÊý¾Ý
+* Description    : 
+* Input          : 
 * Output         : None
 * Return         : None
 *******************************************************************************/
 void CH554UART0SendByte(UINT8 SendDat)
 {
-	SBUF = SendDat;                                                              //²éÑ¯·¢ËÍ£¬ÖÐ¶Ï·½Ê½¿É²»ÓÃÏÂÃæ2ÌõÓï¾ä,µ«·¢ËÍÇ°ÐèTI=0
+	SBUF = SendDat;                                                              
 	while(TI ==0);
 	TI = 0;
 }
 
 /*******************************************************************************
 * Function Name  : UART1Setup()
-* Description    : CH554´®¿Ú1³õÊ¼»¯
+* Description    :
 * Input          : None
 * Output         : None
 * Return         : None
 *******************************************************************************/
 void	UART1Setup( )
 {
-   U1SM0 = 0;                                                                   //UART1Ñ¡Ôñ8Î»Êý¾ÝÎ»
-   U1SMOD = 1;                                                                  //¿ìËÙÄ£Ê½
-   U1REN = 1;                                                                   //Ê¹ÄÜ½ÓÊÕ
+   U1SM0 = 0;                                                                   
+   U1SMOD = 1;                                                                  
+   U1REN = 1;                                                                   
    SBAUD1 = 0 - FREQ_SYS/16/UART1_BUAD;
 }
 
 /*******************************************************************************
 * Function Name  : CH554UART1RcvByte()
-* Description    : CH554UART1½ÓÊÕÒ»¸ö×Ö½Ú
+* Description    : 
 * Input          : None
 * Output         : None
 * Return         : SBUF
 *******************************************************************************/
 UINT8  CH554UART1RcvByte( )
 {
-    while(U1RI == 0);                                                           //²éÑ¯½ÓÊÕ£¬ÖÐ¶Ï·½Ê½¿É²»ÓÃ
+    while(U1RI == 0);                                                           
     U1RI = 0;
     return SBUF1;
 }
 
 /*******************************************************************************
 * Function Name  : CH554UART1SendByte(UINT8 SendDat)
-* Description    : CH554UART1·¢ËÍÒ»¸ö×Ö½Ú
-* Input          : UINT8 SendDat£»Òª·¢ËÍµÄÊý¾Ý
+* Description    : 
+* Input          : 
 * Output         : None
 * Return         : None
 *******************************************************************************/
 void CH554UART1SendByte(UINT8 SendDat)
 {
-	SBUF1 = SendDat;                                                             //²éÑ¯·¢ËÍ£¬ÖÐ¶Ï·½Ê½¿É²»ÓÃÏÂÃæ2ÌõÓï¾ä,µ«·¢ËÍÇ°ÐèTI=0
+	SBUF1 = SendDat;                                                             
 	while(U1TI ==0);
 	U1TI = 0;
 }
 
 /*******************************************************************************
 * Function Name  : CH554WDTModeSelect(UINT8 mode)
-* Description    : CH554¿´ÃÅ¹·Ä£Ê½Ñ¡Ôñ
+* Description    : 
 * Input          : UINT8 mode 
                    0  timer
                    1  watchDog
@@ -244,19 +243,19 @@ void CH554UART1SendByte(UINT8 SendDat)
 void CH554WDTModeSelect(UINT8 mode)
 {
    SAFE_MOD = 0x55;
-   SAFE_MOD = 0xaa;                                                             //½øÈë°²È«Ä£Ê½
+   SAFE_MOD = 0xaa;                                                             
    if(mode){
-     GLOBAL_CFG |= bWDOG_EN;                                                    //Æô¶¯¿´ÃÅ¹·¸´Î»
+     GLOBAL_CFG |= bWDOG_EN;                                                    
    }
-   else GLOBAL_CFG &= ~bWDOG_EN;	                                            //Æô¶¯¿´ÃÅ¹·½ö½ö×÷Îª¶¨Ê±Æ÷
-   SAFE_MOD = 0x00;                                                             //ÍË³ö°²È«Ä£Ê½
-   WDOG_COUNT = 0;                                                              //¿´ÃÅ¹·¸³³õÖµ
+   else GLOBAL_CFG &= ~bWDOG_EN;	                                        
+   SAFE_MOD = 0x00;                                                             
+   WDOG_COUNT = 0;                                                              
 }
 
 /*******************************************************************************
 * Function Name  : CH554WDTFeed(UINT8 tim)
-* Description    : CH554¿´ÃÅ¹·¶¨Ê±Ê±¼äÉèÖÃ
-* Input          : UINT8 tim ¿´ÃÅ¹·¸´Î»Ê±¼äÉèÖÃ
+* Description    : 
+* Input          : 
                    00H(6MHz)=2.8s
                    80H(6MHz)=1.4s
 * Output         : None
@@ -264,7 +263,7 @@ void CH554WDTModeSelect(UINT8 mode)
 *******************************************************************************/
 void CH554WDTFeed(UINT8 tim)
 {
-   WDOG_COUNT = tim;                                                             //¿´ÃÅ¹·¼ÆÊýÆ÷¸³Öµ	
+   WDOG_COUNT = tim;                                                             	
 }
 
 // /*******************************************************************************
@@ -283,7 +282,7 @@ void CH554WDTFeed(UINT8 tim)
 
 // /*******************************************************************************
 // * Function Name  : CH554USBDevWakeup()
-// * Description    : CH554Éè±¸Ä£Ê½»½ÐÑÖ÷»ú£¬·¢ËÍKÐÅºÅ
+// * Description    : 
 // * Input          : None
 // * Output         : None
 // * Return         : None
