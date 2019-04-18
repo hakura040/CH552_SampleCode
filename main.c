@@ -1,7 +1,7 @@
 #include "Public/CH554.H"
 #include "Public/Debug.H"
 #include <string.h>
-#include "USB_Serial/USB_Serial.h"
+#include "USB_Serial.h"
 
 
 char covdata[50];
